@@ -34,3 +34,7 @@ sysinfo.txt
 # OS generated files
 .DS_Store
 ._*
+
+# DOTS
+/[Aa]ssets/SceneDependencyCache/
+/[Aa]ssets/SceneDependencyCache.meta
