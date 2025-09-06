@@ -1,0 +1,21 @@
+# Treat text assets as text, and merge using Unity's merge tool
+*.shader merge=unityyamlmerge eol=lf
+*.cginc merge=unityyamlmerge eol=lf
+*.uxml merge=unityyamlmerge eol=lf
+*.uss merge=unityyamlmerge eol=lf
+*.prefab merge=unityyamlmerge eol=lf
+*.unity merge=unityyamlmerge eol=lf
+*.mat merge=unityyamlmerge eol=lf
+*.anim merge=unityyamlmerge eol=lf
+*.controller merge=unityyamlmerge eol=lf
+
+# Large binary assets handled via Git LFS
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+
+# Binary asset files
+*.asset binary
+LightingData.asset -text
+TerrainData.asset -text
