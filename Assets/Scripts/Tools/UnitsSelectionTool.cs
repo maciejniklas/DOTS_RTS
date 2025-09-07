@@ -1,4 +1,6 @@
 using System;
+using DOTS_RTS.Modules.Management;
+using DOTS_RTS.Modules.Management.UnitySelection;
 using DOTS_RTS.Modules.Movement;
 using DOTS_RTS.Patterns;
 using Unity.Collections;
@@ -16,7 +18,7 @@ namespace DOTS_RTS.Tools
                 var mouseGroundPosition = MouseGroundPositionTool.Instance.GetPosition();
 
                 var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<UnitMovementData>().Build(entityManager);
+                var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<UnitMovementData, SelectableData>().Build(entityManager);
                 var unitsMovementData = entityQuery.ToComponentDataArray<UnitMovementData>(Allocator.Temp);
 
                 for (var index = 0; index < unitsMovementData.Length; index++)
