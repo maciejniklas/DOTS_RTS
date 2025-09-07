@@ -50,10 +50,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2011743826482911984, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
       propertyPath: m_Name
-      value: Unit Variant
+      value: Unit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2011743826482911984, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3693754130611558371}
   m_SourcePrefab: {fileID: 100100000, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
+--- !u!1 &8471023630824614899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2011743826482911984, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
+  m_PrefabInstance: {fileID: 7954545813104161027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3693754130611558371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471023630824614899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df30be043e294a7ea86fd11ddfeeb8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  rotationSpeed: 10
