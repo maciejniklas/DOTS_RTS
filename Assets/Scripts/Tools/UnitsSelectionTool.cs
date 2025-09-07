@@ -16,8 +16,8 @@ namespace DOTS_RTS.Tools
                 var mouseGroundPosition = MouseGroundPositionTool.Instance.GetPosition();
 
                 var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<UnitMovementAuthoring.UnitMovementData>().Build(entityManager);
-                var unitsMovementData = entityQuery.ToComponentDataArray<UnitMovementAuthoring.UnitMovementData>(Allocator.Temp);
+                var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<UnitMovementData>().Build(entityManager);
+                var unitsMovementData = entityQuery.ToComponentDataArray<UnitMovementData>(Allocator.Temp);
 
                 for (var index = 0; index < unitsMovementData.Length; index++)
                 {

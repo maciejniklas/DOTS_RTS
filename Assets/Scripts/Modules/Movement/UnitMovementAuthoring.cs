@@ -8,6 +8,7 @@ namespace DOTS_RTS.Modules.Movement
     {
         [SerializeField] private float speed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private float stoppingDistance;
     
         private class MoveSpeedAuthoringBaker : Baker<UnitMovementAuthoring>
         {
@@ -19,15 +20,9 @@ namespace DOTS_RTS.Modules.Movement
                 {
                     Speed = authoring.speed,
                     RotationSpeed = authoring.rotationSpeed,
+                    StoppingDistanceSquared = authoring.stoppingDistance * authoring.stoppingDistance,
                 });
             }
-        }
-    
-        public struct UnitMovementData : IComponentData
-        {
-            public float Speed;
-            public float RotationSpeed;
-            public float3 TargetGroundPosition;
         }
     }
 }
