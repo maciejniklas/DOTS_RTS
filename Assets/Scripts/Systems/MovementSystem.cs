@@ -2,6 +2,7 @@ using Authorings;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 
 namespace Systems
@@ -12,9 +13,13 @@ namespace Systems
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (localTransform, movementData) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementAuthoring.MovementData>>())
+            foreach (var (localTransform, movementData, physicsVelocity) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementAuthoring.MovementData>, RefRW<PhysicsVelocity>>())
             {
-                localTransform.ValueRW.Position += new float3(1, 0, 0) * movementData.ValueRO.Speed * SystemAPI.Time.DeltaTime;
+                var movementDirection = math.normalize(math.right());
+                physicsVelocity.ValueRW.Linear = movementDirection * movementData.ValueRO.Speed;
+                physicsVelocity.ValueRW.Angular = float3.zero;
+                
+                localTransform.ValueRW.Rotation = quaternion.LookRotation(movementDirection, math.up());
             }
         }
     }
