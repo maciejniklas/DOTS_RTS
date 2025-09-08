@@ -7,6 +7,7 @@ using DOTS_RTS.Patterns;
 using DOTS_RTS.Tools;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -41,19 +42,62 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
             else if (Input.GetMouseButtonUp(0))
             {
                 _isLeftMouseButtonDown = false;
+                
+                var mousePosition = Input.mousePosition;
+                var selectionRectArea = GetSelectionRectArea(_lastLeftMouseButtonDownPosition, mousePosition);
+                var isMultipleSelection = selectionRectArea.width * selectionRectArea.height >= Constants.Values.MinimumAreaForMultipleSelection;
 
-                var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
-                var entitiesArray = entityQuery.ToEntityArray(Allocator.Temp);
-                var localTransforms = entityQuery.ToComponentDataArray<LocalTransform>(Allocator.Temp);
-                var selectionRectArea = GetSelectionRectArea(_lastLeftMouseButtonDownPosition, Input.mousePosition);
-
-                for (var index = 0; index < localTransforms.Length; index++)
+                if (isMultipleSelection)
                 {
-                    var localTransform = localTransforms[index];
-                    var creatureScreenPosition = _mainCamera.WorldToScreenPoint(localTransform.Position);
+                    // Iterate through all entities with CreatureTag and SelectableData components and set their SelectableData.Active property to true if they are inside the selection area.
                     
-                    entityManager.SetComponentEnabled<SelectableData>(entitiesArray[index], selectionRectArea.Contains(creatureScreenPosition));
+                    var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+                    var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
+                    var entitiesArray = entityQuery.ToEntityArray(Allocator.Temp);
+                    var localTransforms = entityQuery.ToComponentDataArray<LocalTransform>(Allocator.Temp);
+
+                    for (var index = 0; index < localTransforms.Length; index++)
+                    {
+                        var localTransform = localTransforms[index];
+                        var creatureScreenPosition = _mainCamera.WorldToScreenPoint(localTransform.Position);
+                    
+                        entityManager.SetComponentEnabled<SelectableData>(entitiesArray[index], selectionRectArea.Contains(creatureScreenPosition));
+                    }
+                }
+                else
+                {
+                    // Iterate through all entities with CreatureTag and SelectableData components and set their SelectableData.Active property to false.
+                    var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+                    var selectedUnitsEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
+                    var entitiesArray = selectedUnitsEntityQuery.ToEntityArray(Allocator.Temp);
+
+                    foreach (var entity in entitiesArray)
+                    {
+                        entityManager.SetComponentEnabled<SelectableData>(entity, false);
+                    }
+                    
+                    // Cast ray from mouse position to find entity with SelectableData component.
+                    var physicsWorldSingletonEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<PhysicsWorldSingleton>().Build(entityManager);
+                    var physicsWorldSingleton = physicsWorldSingletonEntityQuery.GetSingleton<PhysicsWorldSingleton>();
+                    var collisionsWorld = physicsWorldSingleton.CollisionWorld;
+                    var ray = _mainCamera.ScreenPointToRay(mousePosition);
+                    var unitsLayer = LayerMask.NameToLayer(Constants.Layers.UnitLayerName);
+                    var raycastInput = new RaycastInput
+                    {
+                        Start = ray.GetPoint(0),
+                        End = ray.GetPoint(1000),
+                        Filter = new CollisionFilter
+                        {
+                            BelongsTo = ~0u,
+                            CollidesWith = 1u << unitsLayer,
+                            GroupIndex = 0,
+                        },
+                    };
+
+                    if (collisionsWorld.CastRay(raycastInput, out var hit) && entityManager.HasComponent<SelectableData>(hit.Entity))
+                    {
+                        entityManager.SetComponentEnabled<SelectableData>(hit.Entity, true);
+                    }
                 }
                 
                 OnSelectionFinished?.Invoke(this, EventArgs.Empty);
