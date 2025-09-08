@@ -1,7 +1,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace DOTS_RTS.Modules.Movement
+namespace DOTS_RTS.Modules.Movement.ECS
 {
     public struct UnitMovementData : IComponentData
     {

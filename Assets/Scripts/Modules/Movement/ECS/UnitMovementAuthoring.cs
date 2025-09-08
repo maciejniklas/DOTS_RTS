@@ -1,8 +1,7 @@
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 
-namespace DOTS_RTS.Modules.Movement
+namespace DOTS_RTS.Modules.Movement.ECS
 {
     public class UnitMovementAuthoring : MonoBehaviour
     {

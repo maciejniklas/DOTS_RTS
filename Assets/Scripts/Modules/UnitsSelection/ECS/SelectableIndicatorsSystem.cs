@@ -2,7 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 
-namespace DOTS_RTS.Modules.Management.UnitySelection
+namespace DOTS_RTS.Modules.UnitsSelection.ECS
 {
     [BurstCompile]
     public partial struct SelectableIndicatorsSystem : ISystem

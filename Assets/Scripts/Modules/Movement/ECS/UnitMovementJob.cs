@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 
-namespace DOTS_RTS.Modules.Movement
+namespace DOTS_RTS.Modules.Movement.ECS
 {
     [BurstCompile]
     public partial struct UnitMovementJob : IJobEntity

@@ -1,7 +1,7 @@
 using Unity.Entities;
 using UnityEngine;
 
-namespace DOTS_RTS.Modules.Management.UnitySelection
+namespace DOTS_RTS.Modules.UnitsSelection.ECS
 {
     public class SelectableAuthoring : MonoBehaviour
     {

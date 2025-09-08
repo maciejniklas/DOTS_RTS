@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 
-namespace DOTS_RTS.Modules.Movement
+namespace DOTS_RTS.Modules.Movement.ECS
 {
     [BurstCompile]
     public partial struct UnitMovementSystem : ISystem
