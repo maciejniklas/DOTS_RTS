@@ -3,6 +3,7 @@ using DOTS_RTS.Modules.Creatures.ECS;
 using DOTS_RTS.Modules.Movement.ECS;
 using DOTS_RTS.Modules.UnitsSelection.ECS;
 using DOTS_RTS.Modules.UnitsSelection.Model.EventArgs;
+using DOTS_RTS.Modules.UnitsSelection.Model.FormationPositionsProcessor;
 using DOTS_RTS.Patterns;
 using DOTS_RTS.Tools;
 using Unity.Collections;
@@ -15,6 +16,8 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
 {
     public class UnitsSelectionTool : LocalSingleton<UnitsSelectionTool>
     {
+        [SerializeField] private FormationPositionsProcessor positionProcessor;
+        
         public event EventHandler OnSelectionStarted;
         public event EventHandler<SelectionChangedEventArgs> OnSelectionChanged;
         public event EventHandler OnSelectionFinished;
@@ -114,12 +117,13 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
                 var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<UnitMovementData, SelectableData>().Build(entityManager);
                 var unitsMovementData = entityQuery.ToComponentDataArray<UnitMovementData>(Allocator.Temp);
+                var processedPositions = positionProcessor.Process(mouseGroundPosition, unitsMovementData.Length);
 
                 for (var index = 0; index < unitsMovementData.Length; index++)
                 {
                     var unitMovementData = unitsMovementData[index];
                     
-                    unitMovementData.TargetGroundPosition = mouseGroundPosition;
+                    unitMovementData.TargetGroundPosition = processedPositions[index];
 
                     unitsMovementData[index] = unitMovementData;
                 }
