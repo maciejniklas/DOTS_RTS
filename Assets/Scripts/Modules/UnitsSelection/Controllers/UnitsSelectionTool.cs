@@ -63,8 +63,18 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
                     {
                         var localTransform = localTransforms[index];
                         var creatureScreenPosition = _mainCamera.WorldToScreenPoint(localTransform.Position);
-                    
-                        entityManager.SetComponentEnabled<SelectableData>(entitiesArray[index], selectionRectArea.Contains(creatureScreenPosition));
+                        var shouldBeEnabled = selectionRectArea.Contains(creatureScreenPosition);
+
+                        if (entityManager.IsComponentEnabled(entitiesArray[index], typeof(SelectableData)) != shouldBeEnabled)
+                        {
+                            entityManager.SetComponentEnabled<SelectableData>(entitiesArray[index], shouldBeEnabled);
+                            
+                            // Set OnSelected or OnDeselected event.
+                            var selectableData = entityManager.GetComponentData<SelectableData>(entitiesArray[index]);
+                            if (shouldBeEnabled) selectableData.OnSelected = true;
+                            else selectableData.OnDeselected = true;
+                            entityManager.SetComponentData(entitiesArray[index], selectableData);
+                        }
                     }
                 }
                 else
@@ -73,11 +83,6 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
                     var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
                     var selectedUnitsEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
                     var entitiesArray = selectedUnitsEntityQuery.ToEntityArray(Allocator.Temp);
-
-                    foreach (var entity in entitiesArray)
-                    {
-                        entityManager.SetComponentEnabled<SelectableData>(entity, false);
-                    }
                     
                     // Cast ray from mouse position to find entity with SelectableData component.
                     var physicsWorldSingletonEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<PhysicsWorldSingleton>().Build(entityManager);
@@ -97,9 +102,27 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
                         },
                     };
 
+                    Entity hitEntity = default;
+                    
                     if (collisionsWorld.CastRay(raycastInput, out var hit) && entityManager.HasComponent<SelectableData>(hit.Entity))
                     {
-                        entityManager.SetComponentEnabled<SelectableData>(hit.Entity, true);
+                        hitEntity = hit.Entity;
+                    }
+
+                    foreach (var entity in entitiesArray)
+                    {
+                        var shouldBeEnabled = entity.Equals(hitEntity);
+                        
+                        if (entityManager.IsComponentEnabled(entity, typeof(SelectableData)) != shouldBeEnabled)
+                        {
+                            entityManager.SetComponentEnabled<SelectableData>(entity, shouldBeEnabled);
+                            
+                            // Set OnSelected or OnDeselected event.
+                            var selectableData = entityManager.GetComponentData<SelectableData>(entity);
+                            if (shouldBeEnabled) selectableData.OnSelected = true;
+                            else selectableData.OnDeselected = true;
+                            entityManager.SetComponentData(entity, selectableData);
+                        }
                     }
                 }
                 
