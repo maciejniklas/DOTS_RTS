@@ -2,7 +2,7 @@ using Unity.Entities;
 
 namespace DOTS_RTS.Modules.Creatures.ECS
 {
-    public struct CreatureTag : IComponentData
+    public struct FactionTagZombies : IComponentData
     {
         
     }

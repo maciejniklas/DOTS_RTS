@@ -52,10 +52,10 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
 
                 if (isMultipleSelection)
                 {
-                    // Iterate through all entities with CreatureTag and SelectableData components and set their SelectableData.Active property to true if they are inside the selection area.
+                    // Iterate through all entities with CreatureData and SelectableData components and set their SelectableData.Active property to true if they are inside the selection area.
                     
                     var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                    var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
+                    var entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, CreatureData>().WithPresent<SelectableData>().Build(entityManager);
                     var entitiesArray = entityQuery.ToEntityArray(Allocator.Temp);
                     var localTransforms = entityQuery.ToComponentDataArray<LocalTransform>(Allocator.Temp);
 
@@ -79,9 +79,9 @@ namespace DOTS_RTS.Modules.UnitsSelection.Controllers
                 }
                 else
                 {
-                    // Iterate through all entities with CreatureTag and SelectableData components and set their SelectableData.Active property to false.
+                    // Iterate through all entities with CreatureData and SelectableData components and set their SelectableData.Active property to false.
                     var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                    var selectedUnitsEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<CreatureTag>().WithPresent<SelectableData>().Build(entityManager);
+                    var selectedUnitsEntityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<CreatureData>().WithPresent<SelectableData>().Build(entityManager);
                     var entitiesArray = selectedUnitsEntityQuery.ToEntityArray(Allocator.Temp);
                     
                     // Cast ray from mouse position to find entity with SelectableData component.
