@@ -155,9 +155,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unit
       objectReference: {fileID: 0}
-    - target: {fileID: 2011743826482911984, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
-      propertyPath: m_Layer
+    - target: {fileID: 8815408389799061841, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
+      propertyPath: range
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815408389799061841, guid: 4ced3f2373acd6d4c987b3a35c5afbc4, type: 3}
+      propertyPath: targetFaction
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

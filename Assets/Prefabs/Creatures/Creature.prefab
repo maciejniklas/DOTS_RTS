@@ -43,7 +43,9 @@ GameObject:
   - component: {fileID: 8608281885626168343}
   - component: {fileID: 3846400099103185862}
   - component: {fileID: 1463742177699340731}
-  m_Layer: 0
+  - component: {fileID: 8815408389799061841}
+  - component: {fileID: 5621379314722108631}
+  m_Layer: 7
   m_Name: Creature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +129,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 305d2ee912a144d0b984b71cd4942c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+--- !u!114 &8815408389799061841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011743826482911984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1526b4746a1a4984a14a9d9e11e6e394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFaction: 0
+  range: 0
+--- !u!114 &5621379314722108631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011743826482911984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08a116c226b4e21b82b05f098005131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8275918113822830044
