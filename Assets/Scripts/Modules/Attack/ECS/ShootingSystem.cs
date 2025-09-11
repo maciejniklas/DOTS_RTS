@@ -1,3 +1,4 @@
+using DOTS_RTS.Modules.Health.ECS;
 using DOTS_RTS.Modules.SearchingForTarget.ECS;
 using Unity.Burst;
 using Unity.Entities;
@@ -26,7 +27,9 @@ namespace DOTS_RTS.Modules.Attack.ECS
                 
                 shootData.ValueRW.Timer = 0f;
 
-                Debug.Log("Shoot");
+                var targetHealthData = SystemAPI.GetComponentRW<HealthData>(targetData.ValueRO.Target);
+                
+                targetHealthData.ValueRW.Health -= 1;
             }
         }
     }

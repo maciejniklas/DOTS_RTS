@@ -41,6 +41,8 @@ namespace DOTS_RTS.Modules.SearchingForTarget.ECS
                 {
                     foreach (var hit in distanceHits)
                     {
+                        if (!state.EntityManager.Exists(hit.Entity)) continue;
+                        
                         var creatureData = SystemAPI.GetComponent<CreatureData>(hit.Entity);
 
                         if (creatureData.Faction == searchForTargetData.ValueRO.TargetFaction)
