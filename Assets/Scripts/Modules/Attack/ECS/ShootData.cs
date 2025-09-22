@@ -6,5 +6,6 @@ namespace DOTS_RTS.Modules.Attack.ECS
     {
         public float Timer;
         public float Cooldown;
+        public int Damage;
     }
 }

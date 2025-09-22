@@ -6,6 +6,7 @@ namespace DOTS_RTS.Modules.Attack.ECS
     public class ShootAuthoring : MonoBehaviour
     {
         [SerializeField] private float cooldown;
+        [SerializeField] private int damage;
         
         private class ShootAuthoringBaker : Baker<ShootAuthoring>
         {
@@ -16,6 +17,7 @@ namespace DOTS_RTS.Modules.Attack.ECS
                 AddComponent(entity, new ShootData
                 {
                     Cooldown = authoring.cooldown,
+                    Damage = authoring.damage,
                 });
             }
         }
