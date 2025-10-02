@@ -86,6 +86,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6309903815636495715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6247751723895679555}
+  m_Layer: 7
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6247751723895679555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6309903815636495715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.275, y: 2, z: 1.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5665879088800530487}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2708371577147438886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,6 +125,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1455408684663068754, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
+      propertyPath: range
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7725694927218554641, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -145,6 +180,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7725694927218554641, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6247751723895679555}
     - targetCorrespondingSourceObject: {fileID: 3978189465639303445, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4795677413811312800}
@@ -156,6 +194,11 @@ PrefabInstance:
 --- !u!4 &1343004681072447027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3978189465639303445, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
+  m_PrefabInstance: {fileID: 2708371577147438886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5665879088800530487 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7725694927218554641, guid: 52e32b0552ea2c24294959c45029fec6, type: 3}
   m_PrefabInstance: {fileID: 2708371577147438886}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5771660365345496277 stripped
@@ -177,3 +220,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.2
   damage: 5
+  attackDistance: 6
+  bulletSpawnPoint: {fileID: 6247751723895679555}

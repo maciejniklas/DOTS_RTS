@@ -30,12 +30,14 @@ namespace DOTS_RTS.Modules.Attack.ECS
                 }
                 
                 var targetLocalTransform = SystemAPI.GetComponent<LocalTransform>(targetData.ValueRO.Target);
-                var movementDirection = math.normalize(targetLocalTransform.Position - localTransform.ValueRO.Position);
-                var distanceBeforeMovement = math.distancesq(localTransform.ValueRO.Position, targetLocalTransform.Position);
+                var targetHitData = SystemAPI.GetComponent<HitData>(targetData.ValueRO.Target);
+                var targetPosition = targetLocalTransform.TransformPoint(targetHitData.HitLocalPoint);
+                var movementDirection = math.normalize(targetPosition - localTransform.ValueRO.Position);
+                var distanceBeforeMovement = math.distancesq(localTransform.ValueRO.Position, targetPosition);
                 
                 localTransform.ValueRW.Position += movementDirection * bulletData.ValueRO.Speed * SystemAPI.Time.DeltaTime;
 
-                var distanceAfterMovement = math.distancesq(localTransform.ValueRO.Position, targetLocalTransform.Position);
+                var distanceAfterMovement = math.distancesq(localTransform.ValueRO.Position, targetPosition);
 
                 if (distanceAfterMovement <= 0.1f || distanceBeforeMovement < distanceAfterMovement)
                 {

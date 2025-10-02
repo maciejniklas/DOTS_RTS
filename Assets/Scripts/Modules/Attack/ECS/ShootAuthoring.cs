@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace DOTS_RTS.Modules.Attack.ECS
@@ -7,6 +8,8 @@ namespace DOTS_RTS.Modules.Attack.ECS
     {
         [SerializeField] private float cooldown;
         [SerializeField] private int damage;
+        [SerializeField] private float attackDistance;
+        [SerializeField] private Transform bulletSpawnPoint;
         
         private class ShootAuthoringBaker : Baker<ShootAuthoring>
         {
@@ -18,6 +21,8 @@ namespace DOTS_RTS.Modules.Attack.ECS
                 {
                     Cooldown = authoring.cooldown,
                     Damage = authoring.damage,
+                    AttackDistance = authoring.attackDistance,
+                    BulletLocalSpawnPoint =  authoring.bulletSpawnPoint?.localPosition ?? float3.zero,
                 });
             }
         }
